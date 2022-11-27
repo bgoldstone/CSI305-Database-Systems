@@ -1,0 +1,1 @@
+mysql.exe  --protocol=tcp --host=localhost --user=root --port=3306 --default-character-set=utf8 --comments < "Project 2\googleplaystore.sql"

@@ -4,7 +4,7 @@ save_data_on_exit = True
 save_history = True
 save_non_project_files = False
 project_type = 'empty-project-type'
-recent_files = ['simpleDBC.py', 'advDBC.py', 'iudDBC.py']
+recent_files = ['simpleDBC.py', 'advDBC.py', 'iudDBC.py', 'G:\\My Drive\\Fall 2022\\Database Systems\\GooglePlayStoreData\\importData.py']
 
 [main]
 version = 0.2.0
