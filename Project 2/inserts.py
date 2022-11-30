@@ -134,20 +134,20 @@ def insert_genre(pk: int, db: MySQLConnection, cursor: CursorBase, dict_cursor: 
         dict_cursor (CursorBase): Dictionary cursor object
     """
     print("Inserting genre entry...")
-    cursor.execute("SELECT DISTINCT Genres FROM genres;")
-    query = "INSERT INTO genres(app_id, Genres) VALUES( % s, % s)"
+    cursor.execute("SELECT DISTINCT Genres FROM genres")
+    query = "INSERT INTO genres(app_id, Genres) VALUES( %s, %s)"
     genres = cursor.fetchall()
     genre = -1
-    while genre > len(genres) and genre < 0:
+    while genre > len(genres) or genre < 0:
         if genre != -1:
             print("Please type in a valid index!")
         try:
             genre = int(input(
-                f"Genres: {[f'{(index,genre)}' for index,genre in enumerate(genres)]}\n\nPlease Select a genre(1,2,3): "))
+                f"Genres: {[f'{(index,genre[0])}' for index,genre in enumerate(genres)]}\n\nPlease Select a genre(1,2,3): "))
         except ValueError:
             print("Please enter a valid integer!")
     try:
-        cursor.execute(query, (pk, genres[genre]))
+        cursor.execute(query, (pk, genres[genre][0]))
         db.commit()
         dict_cursor.execute(
             "SELECT app_id,Genres FROM genres WHERE app_id=%s AND Genre=%s", (pk, genres[genre]))

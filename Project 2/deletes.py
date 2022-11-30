@@ -21,9 +21,8 @@ def delete_app(db: MySQLConnection, cursor_dict: CursorBase) -> None:
     app_name = None
     while cursor_dict.rowcount == 0:
         if app_name is not None:
-            print("Please enter a full app name!\n")
+            print("Please enter a valid full app name!\n")
         app_name = input("What is the name of the app you want to delete? ")
-        print(app_name)
         cursor_dict.execute("SELECT * FROM apps WHERE App=%s", (app_name,))
         entry = cursor_dict.fetchone()
     cursor_dict.execute("DELETE FROM apps WHERE App=%s", (app_name,))
@@ -42,16 +41,19 @@ def delete_app_genre(db: MySQLConnection, cursor: CursorBase, dict_cursor: Curso
         cursor (CursorBase): Cursor object
         dict_cursor (CursorBase): Dictionary cursor object
     """
-    cursor.execute("SELECT id FROM genre_play_store_apps")
-    primary_keys = [int(item[0]) for item in cursor.fetchall()]
-    pk = -1
-    while pk not in primary_keys:
-        input("Please enter a valid id to remove from the app and genre tables:")
-    dict_cursor.execute("SELECT * FROM genre_play_store_apps WHERE id=%s", pk)
+    cursor.execute("SELECT App FROM genre_play_store_apps")
+    app_names = [item[0] for item in cursor.fetchall()]
+    app = ""
+    while app not in app_names:
+        print(app, app in app_names)
+        app = input(
+            "Please enter a valid app name to remove from the app and genre tables:")
+    dict_cursor.execute(
+        "SELECT * FROM genre_play_store_apps WHERE App=%s", (app,))
     entry = dict_cursor.fetchone()
     try:
-        cursor.execute("DELETE FROM genres WHERE app_id=%s", pk)
-        cursor.execute("DELETE FROM apps WHERE App=%s", pk)
+        cursor.execute("DELETE FROM genres WHERE app_id=%s", (entry['id'],))
+        cursor.execute("DELETE FROM apps WHERE id=%s", (entry['id'],))
         db.commit()
         print(
             f"Your entry was successfully deleted from apps and genres!\n{entry}\n")

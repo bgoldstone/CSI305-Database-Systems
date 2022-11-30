@@ -66,7 +66,7 @@ Please enter an option: ''')
             pk = insert_app(db, cursor, dict_cursor)
             insert_genre(pk, db, cursor, dict_cursor)
             dict_cursor.execute(
-                "SELECT * FROM genre_play_store_apps WHERE id=%s", pk)
+                "SELECT * FROM genre_play_store_apps WHERE id=%s", (pk,))
             entry = dict_cursor.fetchone()
             print(
                 f"Your app and genre have been successfully inserted!\n{entry}\n")

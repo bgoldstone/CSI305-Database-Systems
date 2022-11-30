@@ -43,7 +43,7 @@ def search_app_genre(dict_cursor: CursorBase) -> None:
         dict_cursor.execute(query, (f'%{search}%',))
         data = "\n".join(str(attr)
                          for attr in [f'{row}\n' for row in dict_cursor.fetchall()])
-        print(data)
+        print(f'\n{data}')
         option = input("Would you like to continue searching? (y/n): ")
         continue_searching = True if option.lower()[0] == 'y' else False
 
