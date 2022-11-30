@@ -138,6 +138,7 @@ def insert_genre(pk: int, db: MySQLConnection, cursor: CursorBase, dict_cursor: 
     query = "INSERT INTO genres(app_id, Genres) VALUES( %s, %s)"
     genres = cursor.fetchall()
     genre = -1
+    # While genre index is not valid...
     while genre > len(genres) or genre < 0:
         if genre != -1:
             print("Please type in a valid index!")

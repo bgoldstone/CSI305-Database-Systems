@@ -19,6 +19,7 @@ def delete_app(db: MySQLConnection, cursor_dict: CursorBase) -> None:
     cursor_dict.execute("SELECT * FROM apps WHERE id=-1")
     cursor_dict.fetchone()
     app_name = None
+    # While app name is invalid
     while cursor_dict.rowcount == 0:
         if app_name is not None:
             print("Please enter a valid full app name!\n")
@@ -44,6 +45,7 @@ def delete_app_genre(db: MySQLConnection, cursor: CursorBase, dict_cursor: Curso
     cursor.execute("SELECT App FROM genre_play_store_apps")
     app_names = [item[0] for item in cursor.fetchall()]
     app = ""
+    # While app name is invalid
     while app not in app_names:
         print(app, app in app_names)
         app = input(
